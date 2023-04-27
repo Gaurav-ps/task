@@ -61,11 +61,17 @@ function showOnScreen(obj)
         editButton.type = 'button';
         editButton.value = 'Edit';
         editButton.onclick = () =>{
-            localStorage.removeItem(obj.Email);
-            parent.removeChild(child);
+            //localStorage.removeItem(obj.Email);
             document.getElementById('name').value = obj.Name;
             document.getElementById('mail').value = obj.Email;
             document.getElementById('num').value = obj.Number;
+            axios.delete(`https://crudcrud.com/api/87e226f6b3474adc8e60a8db310859a6/appointmentdata/${obj._id}`)
+            .then((response) =>{
+                parent.removeChild(child);
+            })
+            .catch((err) => {
+                console.log("error")
+            })
         }
         child.appendChild(editButton);
         parent.appendChild(child);
