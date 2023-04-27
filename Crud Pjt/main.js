@@ -24,8 +24,8 @@ function onsignup(event)
         }
         axios.post('https://crudcrud.com/api/87e226f6b3474adc8e60a8db310859a6/appointmentdata',obj)
         .then((response) => {
-            //showOnScreen(response.data)
-            console.log(response);
+            showOnScreen(response.data)
+            //console.log(response);
         })
         .catch((error) => {
             document.body.innerHTML = document.body.innerHTML + "<h2>Error in Execution</h2>"
@@ -34,7 +34,7 @@ function onsignup(event)
         //localStorage.setItem(obj.Email, JSON.stringify(obj));
         //showOnScreen(obj);
     }
-    function showOnScreen(obj)
+function showOnScreen(obj)
     {
         const parent = document.getElementById('items');
         const child = document.createElement('li');
@@ -45,8 +45,15 @@ function onsignup(event)
         delButton.type = 'button';
         delButton.value = 'Delete';
         delButton.onclick = () => {
-            localStorage.removeItem(obj.Email);
-            parent.removeChild(child);
+            //localStorage.removeItem(obj.Email);
+            axios.delete(`https://crudcrud.com/api/87e226f6b3474adc8e60a8db310859a6/appointmentdata/${obj._id}`)
+            .then((response) =>{
+                parent.removeChild(child);
+            })
+            .catch((err) => {
+                console.log("error")
+            })
+            
         }
         child.appendChild(delButton);
         parent.appendChild(child);
