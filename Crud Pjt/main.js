@@ -1,18 +1,34 @@
+window.addEventListener('DOMContentLoaded', () => {
+    axios.get('https://crudcrud.com/api/87e226f6b3474adc8e60a8db310859a6/appointmentdata')
+    .then((response) => {
+        for(var i=0; i<response.data.length; i++)
+        {
+            showOnScreen(response.data[i]);
+        }
+    })
+    .catch((err) => {
+        console.log(err);
+    })
+})
+
+
 function onsignup(event)
     {
         event.preventDefault();
         let obj = {
         Name : event.target.Username.value,
 
-        Email : event.target.email.value
+        Email : event.target.email.value,
+
+        Number : event.target.phonenum.value
         }
-        axios.post('https://crudcrud.com/api/d79b55e6874444e289dae8ec2f9773c2/appointmentdata',obj)
+        axios.post('https://crudcrud.com/api/87e226f6b3474adc8e60a8db310859a6/appointmentdata',obj)
         .then((response) => {
-            showOnScreen(response.data)
-            //console.log(response);
+            //showOnScreen(response.data)
+            console.log(response);
         })
         .catch((error) => {
-            document.body.innerHTML = document.body.innerHTML + "<h2>Error in Exwcution</h2>"
+            document.body.innerHTML = document.body.innerHTML + "<h2>Error in Execution</h2>"
             console.log(error);
         })
         //localStorage.setItem(obj.Email, JSON.stringify(obj));
@@ -22,7 +38,7 @@ function onsignup(event)
     {
         const parent = document.getElementById('items');
         const child = document.createElement('li');
-        child.textContent = obj.Name+'-'+obj.Email;
+        child.textContent = obj.Name+'-'+obj.Email+'-'+obj.Number;
 
         const editButton = document.createElement('input');
         const delButton = document.createElement('input');
@@ -42,6 +58,7 @@ function onsignup(event)
             parent.removeChild(child);
             document.getElementById('name').value = obj.Name;
             document.getElementById('mail').value = obj.Email;
+            document.getElementById('num').value = obj.Number;
         }
         child.appendChild(editButton);
         parent.appendChild(child);
